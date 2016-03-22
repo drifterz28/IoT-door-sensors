@@ -1,0 +1,14 @@
+body {
+	background-color: #eee;
+}
+.app {
+	max-width: 600px;
+	margin: 20px auto;
+	background: #fff;
+	padding: 20px;
+}
+
+table,
+th {
+	text-align: center;
+}
