@@ -4,6 +4,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
+$timeStamp = date('o-m-d H:i:s');
 $state = $_GET['state'];
 $area = $_GET['area'];
 $action = $_GET['action'];
@@ -39,11 +40,12 @@ if($action === 'delete' && !empty($id)) {
 }
 
 if(!empty($state) && !empty($area)) {
-	$store_sql = "INSERT INTO door (area, state) VALUES (:area, :state)";
+	$store_sql = "INSERT INTO door (area, state, timeStamp) VALUES (:area, :state, :timeStamp)";
 	$store = $db->prepare($store_sql);
 	$store->execute(array(
 		':area' => $area,
-		':state' => $state
+		':state' => $state,
+		':timeStamp' => $timeStamp
 	));
 	echo 'done';
 }
