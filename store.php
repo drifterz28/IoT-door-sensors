@@ -11,7 +11,8 @@ $action = $_GET['action'];
 $id = $_GET['id'];
 $date = $_GET['date'];
 $dateRange = $_GET['dateRange'];
-
+$password = $_POST['password']; // only post being done
+$pwHash = '';
 // Create (connect to) SQLite database in file
 $db = new PDO('sqlite:search.sqlite');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -30,6 +31,16 @@ function showRows($db ) {
 
 if(empty($_GET)) {
 	echo showRows($db);
+}
+
+if($action === 'signin' && !empty($password)) {
+	// low level security, hash is the session guid and will expire with session.
+	// move to a db and create a guid for a more secure app
+	if(empty($pwHash)) {
+		echo password_hash($password, PASSWORD_DEFAULT);
+	} else if (password_verify($password, $pwHash)) {
+		// all good on that password
+	}
 }
 
 if($action === 'delete' && !empty($id)) {
